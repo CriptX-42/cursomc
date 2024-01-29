@@ -2,6 +2,7 @@ package com.criptx.cursomc.resource;
 
 import com.criptx.cursomc.domain.Categoria;
 import com.criptx.cursomc.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class CategoriaResource {
 
+    @Autowired
     private CategoriaService service;
 
     @RequestMapping(value="/{id}",method=RequestMethod.GET)
