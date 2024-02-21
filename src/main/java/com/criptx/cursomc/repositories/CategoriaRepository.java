@@ -9,5 +9,4 @@ import java.io.Serializable;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
-
 }
