@@ -1,8 +1,12 @@
 package com.criptx.cursomc;
 
 import com.criptx.cursomc.domain.Categoria;
+import com.criptx.cursomc.domain.Cidade;
+import com.criptx.cursomc.domain.Estado;
 import com.criptx.cursomc.domain.Produto;
 import com.criptx.cursomc.repositories.CategoriaRepository;
+import com.criptx.cursomc.repositories.CidadeRepository;
+import com.criptx.cursomc.repositories.EstadoRepository;
 import com.criptx.cursomc.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +24,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private EstadoRepository estadoRepository;
+
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -42,5 +52,20 @@ public class CursomcApplication implements CommandLineRunner {
 
 		categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2));
 		produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3));
+
+
+		Estado estado1 = new Estado(null, "Minas Gerais");
+		Estado estado2 = new Estado(null, "Campinas");
+
+		Cidade cidade1 = new Cidade(null, "Uberlandia", estado1);
+		Cidade cidade2 = new Cidade(null, "São Paulo", estado2);
+		Cidade cidade3 = new Cidade(null, "São Paulo", estado2);
+
+		estado1.getCidades().addAll(Arrays.asList(cidade1));
+		estado2.getCidades().addAll(Arrays.asList(cidade2, cidade3));
+
+		estadoRepository.saveAll(Arrays.asList(estado1, estado2));
+		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
+
 	}
 }
