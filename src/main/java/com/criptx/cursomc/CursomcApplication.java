@@ -68,16 +68,17 @@ public class CursomcApplication implements CommandLineRunner {
 
         // ? gerei esses dados usando o https://www.fakenamegenerator.com
 
-        Cliente cliente1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "44991837235", TipoCliente.PESSOAFISICA);
-        cliente1.getTelefones().addAll(Arrays.asList("1134304055", "2178999724"));
+        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 
-        Endereco endereco1 = new Endereco(null, "Rua Santa Eulália", "1782", "", "Senador Camará", "21831-190", cliente1, cidade4);
-        Endereco endereco2 = new Endereco(null, "Rua José Maria D'Almeida", "1050", "", "Santa Terezinha", "21831-190", cliente1, cidade3);
+        cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
-        cliente1.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
+        Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cidade1);
+        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, cidade2);
 
-		clienteRepository.saveAll(Arrays.asList(cliente1));
-		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+        cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+
+        clienteRepository.saveAll(Arrays.asList(cli1));
+        enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
     }
 }
