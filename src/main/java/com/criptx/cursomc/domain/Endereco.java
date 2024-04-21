@@ -2,6 +2,7 @@ package com.criptx.cursomc.domain;
 
 import com.criptx.cursomc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,11 +23,13 @@ public class Endereco implements Serializable {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="cliente_id")
+    @JsonIgnore
+    @JoinColumn(name="cidade_id")
     private Cidade cidade;
 
     @ManyToOne
-    @JoinColumn(name="cidade_id")
+    @JoinColumn(name="cliente_id")
+    @JsonIgnore
     private Cliente cliente;
 
     public Endereco() {
