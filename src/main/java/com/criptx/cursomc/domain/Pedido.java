@@ -1,13 +1,18 @@
 package com.criptx.cursomc.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Pedido {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date instante;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
     private Cliente cliente;
     private Endereco enderecoDeEntrega;

@@ -2,12 +2,20 @@ package com.criptx.cursomc.domain;
 
 import com.criptx.cursomc.domain.enums.EstadoPagamento;
 
+import javax.persistence.*;
+
+@Entity
 public class Pagamento {
 
     private static final long serialVersionUID = 1L;
+    @Id
+
     private Integer id;
     private EstadoPagamento estado;
 
+    @OneToOne
+    @JoinColumn(name="pedido_id")
+    @MapsId
     private Pedido pedido;
 
     public Pagamento() {
