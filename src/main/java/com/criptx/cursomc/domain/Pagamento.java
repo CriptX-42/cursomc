@@ -5,13 +5,14 @@ import com.criptx.cursomc.domain.enums.EstadoPagamento;
 import javax.persistence.*;
 
 @Entity
-public class Pagamento {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento {
 
     private static final long serialVersionUID = 1L;
     @Id
 
     private Integer id;
-    private EstadoPagamento estado;
+    private Integer estado;
 
     @OneToOne
     @JoinColumn(name="pedido_id")
@@ -23,7 +24,7 @@ public class Pagamento {
 
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         this.id = id;
-        this.estado = estado;
+        this.estado = estado.getCode();
         this.pedido = pedido;
     }
 
@@ -36,11 +37,11 @@ public class Pagamento {
     }
 
     public EstadoPagamento getEstado() {
-        return estado;
+        return EstadoPagamento.toEmum(estado);
     }
 
     public void setEstado(EstadoPagamento estado) {
-        this.estado = estado;
+        this.estado = estado.getCode();
     }
 
     public Pedido getPedido() {

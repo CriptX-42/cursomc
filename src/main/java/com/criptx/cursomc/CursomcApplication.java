@@ -1,6 +1,7 @@
 package com.criptx.cursomc;
 
 import com.criptx.cursomc.domain.*;
+import com.criptx.cursomc.domain.enums.EstadoPagamento;
 import com.criptx.cursomc.domain.enums.TipoCliente;
 import com.criptx.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -26,6 +29,11 @@ public class CursomcApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
+
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
@@ -80,5 +88,19 @@ public class CursomcApplication implements CommandLineRunner {
         clienteRepository.saveAll(Arrays.asList(cli1));
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Pedido pedido1 = new Pedido(null, simpleDateFormat.parse("30/29/2017 10:23"), cli1, e1);
+        Pedido pedido2 = new Pedido(null, simpleDateFormat.parse("30/29/2017 10:10"), cli1, e2);
+
+        Pagamento pagamento1 = new PagamentoComCartão(null, EstadoPagamento.QUITADO, pedido1, 6);
+        pedido1.setPagamento(pagamento1);
+
+        Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, simpleDateFormat.parse("20/10/2017 00:00") , null);
+        pedido2.setPagamento(pagamento2);
+
+        cli1.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
+
+        pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
+        pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
     }
 }

@@ -2,9 +2,11 @@ package com.criptx.cursomc.domain;
 
 import com.criptx.cursomc.domain.enums.EstadoPagamento;
 
+import javax.persistence.Entity;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class PagamentoComBoleto extends Pagamento{
 
     private static final long serialVersionUID = 1L;
