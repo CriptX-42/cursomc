@@ -24,17 +24,9 @@ public class Produto implements Serializable {
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-
-    public List<Pedido> getPedidos() {
-        List<Pedido> lista = new ArrayList<>();
-        for (ItemPedido pedido: itens) {
-            lista.add(pedido.getPedido());
-        }
-        return lista;
-    }
-
     private List<Categoria> categorias = new ArrayList<>();
 
+    @OneToMany(mappedBy="id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto() {
@@ -46,6 +38,16 @@ public class Produto implements Serializable {
         this.nome = nome;
         this.preco = preco;
     }
+
+
+    public List<Pedido> getPedidos() {
+        List<Pedido> lista = new ArrayList<>();
+        for (ItemPedido x : itens) {
+            lista.add(x.getPedido());
+        }
+        return lista;
+    }
+
 
     public Integer getId() {
         return id;
@@ -111,4 +113,5 @@ public class Produto implements Serializable {
             return false;
         return true;
     }
+
 }
