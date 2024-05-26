@@ -1,6 +1,7 @@
 package com.criptx.cursomc.domain;
 
 import com.criptx.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ public abstract class Pagamento {
     private Integer id;
     private Integer estado;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name="pedido_id")
     @MapsId
