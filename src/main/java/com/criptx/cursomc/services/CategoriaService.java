@@ -2,8 +2,10 @@ package com.criptx.cursomc.services;
 
 import com.criptx.cursomc.domain.Categoria;
 import com.criptx.cursomc.repositories.CategoriaRepository;
+import com.criptx.cursomc.services.exceptions.DataIntegrityException;
 import com.criptx.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,5 +30,15 @@ public class CategoriaService {
     public Categoria update(Categoria obj) {
         find(obj.getId());
         return repo.save(obj);
+    }
+
+    public void delete(Integer id) {
+        find(id);
+        try {
+            repo.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Não é possivel excluir uma categoria com produtos associados");
+        }
+
     }
 }
