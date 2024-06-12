@@ -1,6 +1,7 @@
 package com.criptx.cursomc.resource;
 
 import com.criptx.cursomc.domain.Categoria;
+import com.criptx.cursomc.dto.CategoriaDTO;
 import com.criptx.cursomc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -42,5 +45,14 @@ public class CategoriaResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
+        List<Categoria> list = service.findAll();
+        //? Usando o stream.map estou pegando os objetos de Categoria e passando ao DTO
+        //? collect(Collectors.toList()); transforma tudo isso numa lista
+        List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 }
