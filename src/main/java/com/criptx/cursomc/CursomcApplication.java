@@ -44,6 +44,24 @@ public class CursomcApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Categoria categoria1 = new Categoria(null, "Informatica");
         Categoria categoria2 = new Categoria(null, "Escritório");
+        Categoria categoria3 = new Categoria(null, "Moda e Vestuário");
+        Categoria categoria4 = new Categoria(null, "Casa e Decoração");
+        Categoria categoria5 = new Categoria(null, "Beleza e Cuidados Pessoais");
+        Categoria categoria6 = new Categoria(null, "Esportes e Fitness");
+        Categoria categoria7 = new Categoria(null, "Livros e Papelaria");
+        Categoria categoria8 = new Categoria(null, "Alimentos e Bebidas");
+        Categoria categoria9 = new Categoria(null, "Brinquedos e Jogos");
+        Categoria categoria10 = new Categoria(null, "Automotivo");
+        Categoria categoria11 = new Categoria(null, "Móveis e Decoração");
+        Categoria categoria12 = new Categoria(null, "Jóias e Acessórios");
+        Categoria categoria13 = new Categoria(null, "Saúde e Bem-estar");
+        Categoria categoria14 = new Categoria(null, "Artes e Artesanato");
+        Categoria categoria15 = new Categoria(null, "Pet Shop");
+        Categoria categoria16 = new Categoria(null, "Instrumentos Musicais");
+        Categoria categoria17 = new Categoria(null, "Ferramentas e Construção");
+        Categoria categoria18 = new Categoria(null, "Filmes, Música e Entretenimento");
+        Categoria categoria19 = new Categoria(null, "Bebês e Crianças");
+        Categoria categoria20 = new Categoria(null, "Viagens e Bagagem");
 
         Produto produto1 = new Produto(null, "computador", 2000.00);
         Produto produto2 = new Produto(null, "Tablet", 1500.00);
@@ -56,7 +74,7 @@ public class CursomcApplication implements CommandLineRunner {
         produto2.getCategorias().addAll(Arrays.asList(categoria1, categoria2));
         produto3.getCategorias().addAll(Arrays.asList(categoria1));
 
-        categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2));
+        categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2, categoria3, categoria4, categoria5, categoria6, categoria7));
         produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3));
 
 

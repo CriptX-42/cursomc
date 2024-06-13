@@ -4,6 +4,7 @@ import com.criptx.cursomc.domain.Categoria;
 import com.criptx.cursomc.dto.CategoriaDTO;
 import com.criptx.cursomc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -53,6 +54,17 @@ public class CategoriaResource {
         //? Usando o stream.map estou pegando os objetos de Categoria e passando ao DTO
         //? collect(Collectors.toList()); transforma tudo isso numa lista
         List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
+    }
+
+    @RequestMapping(value ="/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<CategoriaDTO>> findPage(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                       @RequestParam(name = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+                                                       @RequestParam(name = "orderBy", defaultValue = "nome") String orderBy,
+                                                       @RequestParam(name = "direction", defaultValue = "ASC") String direction) {
+        Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+        //? O page já é java 8 complience, então não precisaremos do stream nem do collect
+        Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
         return ResponseEntity.ok().body(listDto);
     }
 }
