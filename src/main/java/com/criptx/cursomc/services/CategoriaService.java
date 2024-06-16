@@ -1,6 +1,7 @@
 package com.criptx.cursomc.services;
 
 import com.criptx.cursomc.domain.Categoria;
+import com.criptx.cursomc.dto.CategoriaDTO;
 import com.criptx.cursomc.repositories.CategoriaRepository;
 import com.criptx.cursomc.services.exceptions.DataIntegrityException;
 import com.criptx.cursomc.services.exceptions.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO (CategoriaDTO objDto) {
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 }
