@@ -1,7 +1,6 @@
 package com.criptx.cursomc.domain;
 
 import com.criptx.cursomc.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public abstract class Pagamento {
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name="pedido_id")
+    @JoinColumn(name = "pedido_id")
     @MapsId
     private Pedido pedido;
 
@@ -27,7 +26,7 @@ public abstract class Pagamento {
 
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         this.id = id;
-        this.estado = estado.getCode();
+        this.estado = (estado == null) ? null : estado.getCode();
         this.pedido = pedido;
     }
 
