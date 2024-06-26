@@ -34,14 +34,16 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
     public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
 
         Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+
         List<FieldMessage> list = new ArrayList<>();
+
         Integer uriId = Integer.parseInt(map.get("id"));
         // inclua os testes aqui, inserindo erros na lista
 
         Cliente aux = repo.findByEmail(objDto.getEmail());
 
         if(aux != null && !aux.getId().equals(uriId)) {
-            list.addAll((Collection<? extends FieldMessage>) new FieldMessage("Email", "email já existente"));
+            list.add(new FieldMessage("email", "Email já existente"));
         }
 
         for (FieldMessage e : list) {
