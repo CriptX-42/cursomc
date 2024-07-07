@@ -16,7 +16,7 @@ public class Pedido {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern = "dd/mm/yyyy HH:mm")
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date instante;
 
     @OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
