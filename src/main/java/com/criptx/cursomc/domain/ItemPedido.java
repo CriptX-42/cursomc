@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 public class ItemPedido implements Serializable {
@@ -70,6 +69,14 @@ public class ItemPedido implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public void setPedido(Pedido pedido) {
+        id.setPedido(pedido);
+    }
+
+    public void setProduto(Produto produto) {
+        id.setProduto(produto);
     }
 
     @Override
