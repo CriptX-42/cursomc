@@ -1,6 +1,8 @@
 package com.criptx.cursomc.config;
 
 import com.criptx.cursomc.services.DBService;
+import com.criptx.cursomc.services.EmailService;
+import com.criptx.cursomc.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,11 @@ public class DevConfig {
 
     @Value("$spring.jpa.hibernate.ddl-auto")
     private String strategy;
+
+    @Bean
+    public EmailService emailService() {
+        return new SmtpEmailService();
+    }
 
     @Bean
     public boolean instantiateDatabase() throws ParseException {
