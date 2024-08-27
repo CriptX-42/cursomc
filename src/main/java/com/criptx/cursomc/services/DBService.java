@@ -114,7 +114,7 @@ public class DBService {
 
         // ? gerei esses dados usando o https://www.fakenamegenerator.com
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "rs6073@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
