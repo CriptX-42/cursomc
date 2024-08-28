@@ -5,6 +5,7 @@ import com.criptx.cursomc.domain.enums.EstadoPagamento;
 import com.criptx.cursomc.domain.enums.TipoCliente;
 import com.criptx.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -32,6 +33,8 @@ public class DBService {
     private PagamentoRepository pagamentoRepository;
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void instantiateTestDatabase() throws ParseException {
         Categoria categoria1 = new Categoria(null, "Informatica");
@@ -114,7 +117,7 @@ public class DBService {
 
         // ? gerei esses dados usando o https://www.fakenamegenerator.com
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "rs6073@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "rs6073@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("1234"));
 
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
