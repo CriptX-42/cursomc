@@ -1,5 +1,6 @@
 package com.criptx.cursomc.domain;
 
+import com.criptx.cursomc.domain.enums.Perfil;
 import com.criptx.cursomc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Cliente implements Serializable {
@@ -27,6 +29,10 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private String senha;
 
+    @ElementCollection(fetch=FetchType.EAGER)
+    @CollectionTable(name="PERFIS")
+    private Set<Integer> perfis = new HashSet<>();
+
 
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -42,6 +48,7 @@ public class Cliente implements Serializable {
 
 
     public Cliente() {
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
@@ -51,6 +58,15 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo == null) ? null : tipo.getCode();
         this.senha = senha;
+    }
+
+
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEmum(x)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCode());
     }
 
     public Integer getId() {
