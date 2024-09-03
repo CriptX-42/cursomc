@@ -10,8 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.criptx.cursomc"})
 public class CursomcApplication implements CommandLineRunner {
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
     }
