@@ -2,12 +2,15 @@ package com.criptx.cursomc.services;
 
 import com.criptx.cursomc.domain.*;
 import com.criptx.cursomc.domain.Cliente;
+import com.criptx.cursomc.domain.enums.Perfil;
 import com.criptx.cursomc.domain.enums.TipoCliente;
 import com.criptx.cursomc.dto.ClienteDTO;
 import com.criptx.cursomc.dto.ClienteNewDTO;
 import com.criptx.cursomc.repositories.CidadeRepository;
 import com.criptx.cursomc.repositories.ClienteRepository;
 import com.criptx.cursomc.repositories.EnderecoRepository;
+import com.criptx.cursomc.security.UserSS;
+import com.criptx.cursomc.services.exceptions.AuthorizationException;
 import com.criptx.cursomc.services.exceptions.DataIntegrityException;
 import com.criptx.cursomc.services.exceptions.ObjectNotFoundException;
 import org.hibernate.boot.UnsupportedOrmXsdVersionException;
@@ -37,6 +40,10 @@ public class ClienteService {
 
 
     public Cliente find(Integer id) {
+        UserSS user = UserService.authenticated();
+        if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
         Optional<Cliente> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
