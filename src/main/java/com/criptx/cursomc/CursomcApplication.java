@@ -1,5 +1,7 @@
 package com.criptx.cursomc;
 
+import com.criptx.cursomc.services.S3Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +16,10 @@ public class CursomcApplication implements CommandLineRunner {
         SpringApplication.run(CursomcApplication.class, args);
     }
 
-    public void run(String... args) throws Exception {
+    @Autowired
+    private S3Service s3Service;
 
+    public void run(String... args) throws Exception {
+        s3Service.uploadFile("C:\\temp\\fotos\\ana.jpg");
     }
 }
