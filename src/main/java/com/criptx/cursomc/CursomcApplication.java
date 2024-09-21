@@ -20,6 +20,5 @@ public class CursomcApplication implements CommandLineRunner {
     private S3Service s3Service;
 
     public void run(String... args) throws Exception {
-        s3Service.uploadFile("C:\\temp\\fotos\\ana.jpg");
     }
 }
