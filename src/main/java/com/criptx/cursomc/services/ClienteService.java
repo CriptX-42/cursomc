@@ -15,6 +15,7 @@ import com.criptx.cursomc.services.exceptions.DataIntegrityException;
 import com.criptx.cursomc.services.exceptions.ObjectNotFoundException;
 import org.hibernate.boot.UnsupportedOrmXsdVersionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +44,12 @@ public class ClienteService {
 
     @Autowired
     private S3Service s3Service;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
 
 
     public Cliente find(Integer id) {
@@ -114,13 +122,10 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado");
         }
 
-        URI uri = s3Service.uploadFile(multipartFile);
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        String fileName = prefix + user.getId() + ".jpg";
 
-        Cliente cli = find(user.getId());
-        cli.setImageUrl(uri.toString());
-        repo.save(cli);
-
-        return uri;
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
     }
 
     private void updateData(Cliente newObj, Cliente obj){
