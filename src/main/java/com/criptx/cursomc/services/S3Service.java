@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
+@Service
 public class S3Service {
 
     private Logger LOG = LoggerFactory.getLogger(S3Service.class);
