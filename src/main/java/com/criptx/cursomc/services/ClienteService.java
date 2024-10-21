@@ -101,6 +101,20 @@ public class ClienteService {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null);
     }
 
+    public Cliente findByEmail(String email) {
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Cliente obj = repo.findByEmail(email);
+        if (obj == null) {
+            throw new ObjectNotFoundException(
+                    "Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+        }
+        return obj;
+    }
+
     public Cliente fromDTO(ClienteNewDTO objDto){
         Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEmum(objDto.getTipo()), bCryptPasswordEncoder.encode(objDto.getSenha()));
         Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
