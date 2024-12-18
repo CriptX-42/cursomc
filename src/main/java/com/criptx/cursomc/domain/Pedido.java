@@ -103,13 +103,6 @@ public class Pedido {
         this.itens = itens;
     }
 
-    public double getValorTotal() {
-        double soma = 0.0;
-        for (ItemPedido ip : itens) {
-            soma = soma + ip.getSubTotal();
-        }
-        return soma;
-    }
 
     @Override
     public int hashCode() {
